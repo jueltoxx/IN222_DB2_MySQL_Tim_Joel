@@ -3,27 +3,27 @@ Dieses Repository beinhaltet alle Daten um die ursprüngliche Oracle HFTM Verein
 Dazu wird ein Container erstellt welcher MySQL ausführt, die nötigen .SQL Files implementiert und am Ende die Datenbank mit User und Daten zur Verfügung stellt.
 
 ## Unterschiede zur Oracle DB
-** Anspruch / Optimierung **
+**Anspruch / Optimierung**
 MySQL ist super für kleine einfache Datenbanken
 Oracle hat mehr SIcherheitsfeatures und optimiert für "Large-Scale" Applikationen
 Oracle ist sehr teuer (Business Einsatz) vs. MySQL OpenSource
 
-** Einfacher Umgang mit Datumswerten **
+**Einfacher Umgang mit Datumswerten**
 Bei Oracle müssen Zeit und Datumsangaben immer in solche umgewandelt werden (TO_DATE) um damit zu arbeiten.
 Bei MySQL ist dies weder bei der Dateneingabe noch beim Abruf notwendig.
 
-** Datentypen **
+**Datentypen**
 Oracle: VARCHAR2, INTEGER, NUMBER und DATE
 MySQL: VARCHAR, DECIMAL, CHAR und INTEGER
 
-** Präfixe **
+**Präfixe**
 Oracle spricht tabellen über Schemas an z.B. vereinuser.Personen.
 MySQL benötigt dies nicht.
 
-** DB Beziehungen **
+**DB Beziehungen**
 Private und Foreign Keys werden in den .SQL Files anders definiert.
 
-
+## Setup ##
 **Image Bauen**
 Befehl in Directory ausführen wo dockerfile und init.sql liegen
 ```console
@@ -50,7 +50,7 @@ docker run --name mysql-cont -p 3306:3306 ghcr.io/jueltoxx/mysql-image:latest
 ```console
 docker start mysql-cont
 ```
-
+## Zugriff &  Datenmanagement ##
 **Zugriff auf DB**
 Wenn der CLient einen MySQL Client installiert hat:
 ```console
@@ -84,18 +84,3 @@ docker inspect mysql-cont | grep "Destination"
 docker cp mysql-cont:/var/lib/mysql/mydatabase ./backup/
 
 5. Die gespeicherten Daten können auf jeder MySQL Datenbank, welche die selbe Version hat wie die ursprüngliche DB, eingelesen werden.
-
-**Erwartete Ergebnisse**
-
-Ein Docker-Image auf der GitHub-Container-Registry, das auf einem beliebigen Rechner gestartet werden kann und die Vereins-Datenbank bereitstellt.
-
--> Unser Image kann auf jeder Plattform und Architektur ausgeführt werden wo docker installiert ist.
-
----
-Das Image sollte einen SQL-Client enthalten über den man sich über die Kommando-Zeile im Container auf die Datenbank verbinden kann.
-
--> das default MySQL Image enthält bereits einen MySQL Cient. Verwendung:
-
-```console
-docker exec -it mysql-cont mysql -u root -p
-```
