@@ -1,3 +1,5 @@
+-- Legt alle Tabellen und Beziehungen der Vereinsdatenbank fest.
+
 -- Erstellen der Tabelle Status
 CREATE TABLE Status (
     StatID INTEGER PRIMARY KEY,
@@ -90,36 +92,3 @@ CREATE TABLE Spende (
     FOREIGN KEY (SponID) REFERENCES Sponsor(SponID),
     FOREIGN KEY (AnalID) REFERENCES Anlass(AnalID)
 );
-
--- Einfügen von Demo-Daten
--- Status
-INSERT INTO Status (StatID, Bezeichner, Beitrag) VALUES (1, 'Aktiv', 50.00);
-
--- Person
-INSERT INTO Person (PersID, Name, Vorname, Strasse_Nr, PLZ, Ort, bezahlt, Bemerkungen, Eintritt, Austritt, StatID, MentorID)
-VALUES (1, 'Muster', 'Max', 'Musterstrasse 1', '1234', 'Musterstadt', 'Y', 'Demo-Person', '2023-01-01', NULL, 1, NULL);
-
--- Funktion
-INSERT INTO Funktion (FunkID, Bezeichner) VALUES (1, 'Vorstand');
-
--- Funktionsbesetzung
-INSERT INTO Funktionsbesetzung (Antritt, Ruecktritt, FunkID, PersID)
-VALUES ('2023-01-01', NULL, 1, 1);
-
--- Sponsor
-INSERT INTO Sponsor (SponID, Name, Strasse_Nr, PLZ, Ort, Spendentotal)
-VALUES (1, 'Firma Demo', 'Hauptstrasse 10', '5678', 'Demohausen', 1000.00);
-
--- Sponsorenkontakt
-INSERT INTO Sponsorenkontakt (PersID, SponID) VALUES (1, 1);
-
--- Anlass
-INSERT INTO Anlass (AnalID, Bezeichner, Ort, Datum, Kosten, OrgID)
-VALUES (1, 'Demo-Event', 'Veranstaltungshalle', '2023-05-01', 500.00, 1);
-
--- Teilnehmer
-INSERT INTO Teilnehmer (PersID, AnalID) VALUES (1, 1);
-
--- Spende
-INSERT INTO Spende (SpenID, Bezeichner, Datum, Betrag, SponID, AnalID)
-VALUES (1, 'Demo-Spende', '2023-05-01', 250.00, 1, 1);
