@@ -1,12 +1,49 @@
+# Informationen
+Dieses Repository beinhaltet alle Daten um die ursprüngliche Oracle HFTM Vereinsfatenbank in einer MySQL-DB aufzubauen.
+Dazu wird ein Container erstellt welcher MySQL ausführt, die nötigen .SQL Files implementiert und am Ende die Datenbank mit User und Daten zur Verfügung stellt.
+
+## Unterschiede zur Oracle DB
+** Anspruch / Optimierung **
+MySQL ist super für kleine einfache Datenbanken
+Oracle hat mehr SIcherheitsfeatures und optimiert für "Large-Scale" Applikationen
+Oracle ist sehr teuer (Business Einsatz) vs. MySQL OpenSource
+
+** Einfacher Umgang mit Datumswerten **
+Bei Oracle müssen Zeit und Datumsangaben immer in solche umgewandelt werden (TO_DATE) um damit zu arbeiten.
+Bei MySQL ist dies weder bei der Dateneingabe noch beim Abruf notwendig.
+
+** Datentypen **
+Oracle: VARCHAR2, INTEGER, NUMBER und DATE
+MySQL: VARCHAR, DECIMAL, CHAR und INTEGER
+
+** Präfixe **
+Oracle spricht tabellen über Schemas an z.B. vereinuser.Personen.
+MySQL benötigt dies nicht.
+
+** DB Beziehungen **
+Private und Foreign Keys werden in den .SQL Files anders definiert.
+
+
 **Image Bauen**
 Befehl in Directory ausführen wo dockerfile und init.sql liegen
 ```console
 docker build -t mysql-image .
 ```
+-> Image auf Github Docker Registry
+```console
+docker build -t ghcr.io/jueltoxx/mysql-image:latest .
+docker push ghcr.io/jueltoxx/mysql-image:latest
+```
 
 **Container erstellen auf Basis des Image**
+*lokal*
 ```console
 docker run --name mysql-cont -p 3306:3306 mysql-image
+```
+
+*ghcr.io image*
+```console
+docker run --name mysql-cont -p 3306:3306 ghcr.io/jueltoxx/mysql-image:latest
 ```
 
 **Container starten (sofern nötig)**
@@ -38,7 +75,7 @@ Exportiert ein .sql File welches die gesamte DB inklusive der Daten wieder erste
 docker exec -it mysql-cont mysqladmin -u root -p shutdown
 
 2. Container stoppen
-docker stop mysql-container
+docker stop mysql-cont
 
 3. Physisches Verzeichnis des Container finden (sofern nicht schon bekannt)
 docker inspect mysql-cont | grep "Destination" 
@@ -53,7 +90,6 @@ docker cp mysql-cont:/var/lib/mysql/mydatabase ./backup/
 Ein Docker-Image auf der GitHub-Container-Registry, das auf einem beliebigen Rechner gestartet werden kann und die Vereins-Datenbank bereitstellt.
 
 -> Unser Image kann auf jeder Plattform und Architektur ausgeführt werden wo docker installiert ist.
--> VEREINSDB NOCH NICHT VORHANDEN
 
 ---
 Das Image sollte einen SQL-Client enthalten über den man sich über die Kommando-Zeile im Container auf die Datenbank verbinden kann.
