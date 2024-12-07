@@ -17,7 +17,7 @@ CREATE TABLE Person (
     Ort VARCHAR(20) NOT NULL,
     bezahlt CHAR(1) NOT NULL,
     Bemerkungen VARCHAR(25),
-    Eintritt DATE NOT NULL,
+    Eintritt DATE,
     Austritt DATE,
     StatID INTEGER,
     MentorID INTEGER,
@@ -63,7 +63,7 @@ CREATE TABLE Sponsorenkontakt (
 
 -- Erstellen der Tabelle Anlass
 CREATE TABLE Anlass (
-    AnalID INTEGER PRIMARY KEY,
+    AnlaID INTEGER PRIMARY KEY,
     Bezeichner VARCHAR(20) NOT NULL,
     Ort VARCHAR(20) NOT NULL,
     Datum DATE NOT NULL,
@@ -75,20 +75,21 @@ CREATE TABLE Anlass (
 -- Erstellen der Tabelle Teilnehmer
 CREATE TABLE Teilnehmer (
     PersID INTEGER NOT NULL,
-    AnalID INTEGER NOT NULL,
-    PRIMARY KEY (PersID, AnalID),
+    AnlaID INTEGER NOT NULL,
+    PRIMARY KEY (PersID, AnlaID),
     FOREIGN KEY (PersID) REFERENCES Person(PersID),
-    FOREIGN KEY (AnalID) REFERENCES Anlass(AnalID)
+    FOREIGN KEY (AnlaID) REFERENCES Anlass(AnlaID)
 );
 
 -- Erstellen der Tabelle Spende
 CREATE TABLE Spende (
-    SpenID INTEGER PRIMARY KEY,
+    SpenID INTEGER NOT NULL,
     Bezeichner VARCHAR(20),
     Datum DATE NOT NULL,
     Betrag DECIMAL(8,2) NOT NULL,
     SponID INTEGER NOT NULL,
-    AnalID INTEGER,
+    AnlaID INTEGER,
+    PRIMARY KEY (SpenID, SponID),
     FOREIGN KEY (SponID) REFERENCES Sponsor(SponID),
-    FOREIGN KEY (AnalID) REFERENCES Anlass(AnalID)
+    FOREIGN KEY (AnlaID) REFERENCES Anlass(AnlaID)
 );

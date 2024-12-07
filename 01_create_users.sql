@@ -1,10 +1,10 @@
--- Password Policy anpassen, damit die kurzen 
-SET GLOBAL validate_password.policy = LOW;
-SET GLOBAL validate_password.length = 5; -- Tiger Password hat nur 5 char
+-- Beim verwendeten MySQL Image gibt es keine Passwortrichtlinien. 
+-- Daher müssen diese anders als bei OraDB nicht angepasst werden.
 
--- Anlegen User Scott und vereinuser
+-- Benutzer scott erstellen und Rechte vergeben
 CREATE USER 'scott'@'%' IDENTIFIED BY 'tiger';
 GRANT ALL PRIVILEGES ON *.* TO 'scott'@'%';
 
+-- Benutzer vereinuser erstellen und Rechte vergeben
 CREATE USER 'vereinuser'@'%' IDENTIFIED BY 'vereinuser';
 GRANT ALL PRIVILEGES ON *.* TO 'vereinuser'@'%';

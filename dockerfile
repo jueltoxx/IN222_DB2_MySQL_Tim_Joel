@@ -8,7 +8,9 @@ ENV MYSQL_USER=myuser
 ENV MYSQL_PASSWORD=mypassword
 
 # Skripte Kopieren
-COPY ./init.sql /docker-entrypoint-initdb.d/
+COPY ./01_create_users.sql /docker-entrypoint-initdb.d/
+COPY ./02_create_tables.sql /docker-entrypoint-initdb.d/
+COPY ./03_insert_data.sql /docker-entrypoint-initdb.d/
 
 # Defaultport verwenden
 EXPOSE 3306
